@@ -1,0 +1,39 @@
+{
+  "name": "hubot-dev",
+  "version": "0.0.1",
+  "description": "hubot-dev =========",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/twistedogic/hubot-dev"
+  },
+  "author": "Jordan Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/twistedogic/hubot-dev/issues"
+  },
+
+  "homepage": "https://github.com/twistedogic/hubot-dev",
+
+  "dependencies": {
+    "coffee-script": "~1.6",
+    "tablify": "^0.1.5",
+    "yql": "^1.0.2"
+  },
+
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "sinon-chai": "*",
+    "sinon": "*"
+  },
+
+  "main": "index.coffee",
+
+  "scripts": {
+    "test": "script/test"
+  }
+}
