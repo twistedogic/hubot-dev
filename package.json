@@ -21,7 +21,8 @@
   "dependencies": {
     "coffee-script": "~1.6",
     "tablify": "^0.1.5",
-    "yql": "^1.0.2"
+    "yql": "^1.0.2",
+    "dockerode": "^2.0.4"
   },
 
   "devDependencies": {

@@ -83,14 +83,14 @@ module.exports = (robot) ->
         table = []
         if data.span[0].class.split(" ")[0] is "neg"
           table.push
-            sybmol: stock
+            sybmol: symbol
             last: data.span[0].content
             change: "-" + data.span[1].content
             range: data.strong
 
         else
           table.push
-            sybmol: stock
+            sybmol: symbol
             last: data.span[0].content
             change: "+" + data.span[1].content
             range: data.strong
@@ -109,14 +109,14 @@ module.exports = (robot) ->
 
 
   robot.respond /hkstock news (.*)/i, (msg) ->
-    symbol = msg.match[1]
+    symbol = msg.match[1] or "0001"
     robot.hkstock_news symbol, (err, data) ->
       return msg.reply("Sorry, there was an error: " + err)  if err isnt null
       msg.send data
 
 
   robot.respond /hkstock quote (.*)/i, (msg) ->
-    symbol = msg.match[1]
+    symbol = msg.match[1] or "0001"
     robot.hkstock_quote symbol, (err, data) ->
       return msg.reply("Sorry, there was an error: " + err)  if err isnt null
       msg.send data
