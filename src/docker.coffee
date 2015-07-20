@@ -29,21 +29,23 @@ module.exports = (robot) ->
 
   robot.docker_ps = (callback) ->
     docker.listContainers (err, containers) ->
-      dockertable = undefined
       dockertable = []
       if err != null
         return callback(err)
       containers.forEach (containerInfo) ->
-        dockertable.push
+        json = 
           name: containerInfo.Names[0].substring(1)
           id: containerInfo.Id.slice(0, 13)
           status: containerInfo.Status
           image: containerInfo.Image
+        docker.getContainer(containerInfo.Id).inspect (err, res) ->
+          json.ip = res.NetworkSettings.IPAddress
+          return
+        dockertable.push json
         return
       callback null, tablify(dockertable)
 
   robot.docker_restart = (name, callback) ->
-    container = undefined
     container = docker.getContainer(name)
     container.restart (err, data) ->
       console.log data
@@ -57,6 +59,7 @@ module.exports = (robot) ->
         return msg.reply('Sorry, there was an error: ' + err)
       msg.send data
   robot.respond /docker restart (.*)/i, (msg) ->
+    id = undefined
     id = undefined
     id = msg.match[1]
     robot.docker_restart id, (err, data) ->
