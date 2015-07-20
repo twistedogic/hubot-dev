@@ -81,10 +81,7 @@ module.exports = (input, callback) ->
       callback e, r
       return
   else
-    if Is.url(input)
-      createPresent input, (e, r) ->
-        callback e, r
-        return
-    else
-      callback null, 'Please input slideshare url'
+    createPresent input, (e, r) ->
+      callback e, r
+      return
   return
