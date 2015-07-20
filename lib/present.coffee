@@ -8,7 +8,6 @@ createPresent = (input, callback) ->
     Cmd: [
       '/nodejs/bin/node'
       'app.js'
-      '-l'
       input
     ]
   }, (err, container) ->
