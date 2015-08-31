@@ -34,15 +34,11 @@ module.exports = (robot) ->
       if err != null
         return callback(err)
       containers.forEach (containerInfo) ->
-        docker.getContainer(containerInfo.Id).inspect (err, res) ->
-          json =
-            name: res.Name
-            id: res.Config.Hostname
-            status: res.State.Running
-            image: res.Config.Image
-            ip: res.NetworkSettings.IPAddress
-          dockertable.push json
-          return
+        dockertable.push
+          name: containerInfo.Names[0].substring(1)
+          id: containerInfo.Id.slice(0, 13)
+          status: containerInfo.Status
+          image: containerInfo.Image
         return
       callback null, tablify(dockertable)
 

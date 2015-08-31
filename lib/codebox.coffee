@@ -44,7 +44,6 @@ exports.create = (callback) ->
   return
 
 stopAndRemove = (input, callback) ->
-  container = undefined
   container = docker.getContainer(input)
   container.stop (err, r) ->
     if err

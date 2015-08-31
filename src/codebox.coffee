@@ -19,10 +19,10 @@ module.exports = (robot) ->
 
   robot.create_codebox = (input, callback) ->
     codebox.create input, (err, data) ->
-      callback null, tablify(data)
+      callback null, tablify([data])
 
   robot.remove_codebox = (callback) ->
-    tunnel.remove (err, data) ->
+    codebox.remove (err, data) ->
       callback null, data
 
   robot.respond /codebox remove/i, (msg) ->
