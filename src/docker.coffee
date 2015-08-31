@@ -17,31 +17,32 @@ tablify = require('tablify')
 module.exports = (robot) ->
   `var options`
   if process.env.HUBOT_DOCKER_HOST
-    options = 
+    options =
       host: process.env.HUBOT_DOCKER_HOST
       port: process.env.HUBOT_DOCKER_PORT
       timeout: 10000
   else
-    options = 
+    options =
       socketPath: process.env.HUBOT_DOCKER_SOCKET or '/var/run/docker.sock'
       timeout: 10000
   docker = new Docker(options)
 
   robot.docker_ps = (callback) ->
     docker.listContainers (err, containers) ->
+      dockertable = undefined
       dockertable = []
       if err != null
         return callback(err)
       containers.forEach (containerInfo) ->
-        json = 
-          name: containerInfo.Names[0].substring(1)
-          id: containerInfo.Id.slice(0, 13)
-          status: containerInfo.Status
-          image: containerInfo.Image
         docker.getContainer(containerInfo.Id).inspect (err, res) ->
-          json.ip = res.NetworkSettings.IPAddress
+          json =
+            name: res.Name
+            id: res.Config.Hostname
+            status: res.State.Running
+            image: res.Config.Image
+            ip: res.NetworkSettings.IPAddress
+          dockertable.push json
           return
-        dockertable.push json
         return
       callback null, tablify(dockertable)
 
@@ -59,12 +60,9 @@ module.exports = (robot) ->
         return msg.reply('Sorry, there was an error: ' + err)
       msg.send data
   robot.respond /docker restart (.*)/i, (msg) ->
-    id = undefined
-    id = undefined
     id = msg.match[1]
     robot.docker_restart id, (err, data) ->
       if err != null
         return msg.reply('Sorry, there was an error: ' + err)
       msg.send data
   return
-
