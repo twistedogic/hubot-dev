@@ -33,9 +33,9 @@ exports.create = (callback) ->
       container.start (err, data) ->
         container.inspect (err, data) ->
           if !err
-            callback null,
+            callback null,JSON.stringify(
               ip: data.NetworkSettings.IPAddress
-              password: password
+              password: password)
           else
             callback err
           return

@@ -13,13 +13,12 @@
 # Author
 #   Jordan Li
 codebox = require('../lib/codebox')
-tablify = require('tablify')
 
 module.exports = (robot) ->
 
   robot.create_codebox = (input, callback) ->
     codebox.create input, (err, data) ->
-      callback null, tablify([data])
+      callback null, data
 
   robot.remove_codebox = (callback) ->
     codebox.remove (err, data) ->
