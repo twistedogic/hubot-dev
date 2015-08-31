@@ -21,6 +21,7 @@
     "coffee-script": "~1.6",
     "dockerode": "^2.2.2",
     "is_js": "^0.7.4",
+    "lodash": "^3.10.1",
     "tablify": "^0.1.5",
     "yql": "^1.0.2"
   },

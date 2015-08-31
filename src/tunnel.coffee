@@ -17,11 +17,11 @@ tunnel = require('../lib/tunnel')
 module.exports = (robot) ->
 
   robot.create_tunnel = (input, callback) ->
-    tunnel input, (err, data) ->
+    tunnel.create input, (err, data) ->
       callback null, data
 
   robot.remove_tunnel = (callback) ->
-    tunnel 'remove', (err, data) ->
+    tunnel.remove (err, data) ->
       callback null, data
 
   robot.respond /tunnel remove/i, (msg) ->
@@ -30,6 +30,7 @@ module.exports = (robot) ->
         return msg.reply('Sorry, there was an error: ' + err)
       msg.send data
   robot.respond /tunnel create (.*)/i, (msg) ->
+    id = undefined
     id = undefined
     id = msg.match[1]
     robot.create_tunnel id, (err, data) ->
