@@ -4,14 +4,15 @@ Is = require('is_js')
 
 createPresent = (input, callback) ->
   docker.createContainer {
-    Image: 'twistedogic/revealjs'
+    Image: 'twistedogic/revealjs:latest'
     Cmd: [
       '/nodejs/bin/node'
       'app.js'
       input
     ]
-  }, (err, container) ->
-    container.start {}, (err, data) ->
+  }, (err, res) ->
+    container = docker.getContainer(res.id)
+    container.start (err, data) ->
       if err
         callback err
       else
